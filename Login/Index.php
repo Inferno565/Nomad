@@ -1,38 +1,43 @@
 <?php
-session_start();
+session_start(); // Start session
 include("../Connection.php"); // Database connection
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $user_id = $_POST['user_id'];
-    $password = $_POST['password'];
+    $user_id = $_POST["user_id"];
+    $password = $_POST["password"];
 
-    // Prepare SQL statement to prevent SQL Injection
-    $stmt = $conn->prepare("SELECT student_mobile, password FROM student_data WHERE user_id = ?");
+    // Fetch student data from database
+    $query = "SELECT * FROM students WHERE user_id = ?";
+    $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $user_id);
     $stmt->execute();
-    $stmt->store_result();
+    $result = $stmt->get_result();
 
-    // Check if user exists
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($user_id, $hashed_password);
-        $stmt->fetch();
+    if ($result->num_rows === 1) {
+        $row = $result->fetch_assoc();
 
         // Verify password
-        if (password_verify($password, $hashed_password)) {
-            $_SESSION['user_id'] = $user_id;
-            header("Location: dashboard.php"); // Redirect on success
+        if (password_verify($password, $row["password"])) {
+            // Set session variables
+            // $_SESSION["student_id"] = $row["id"];
+            // $_SESSION["student_name"] = $row["name"];
+            // $_SESSION["student_user_id"] = $row["user_id"];
+            // $_SESSION["student_program"] = $row["program"];
+            // $_SESSION["student_fees"] = $row["pending_fees"];
+            // $_SESSION["student_attendance"] = $row["attendance"];
+
+            // Redirect to dashboard
+            header("Location: dashboard.php");
             exit();
         } else {
-            $error = "Invalid user_id or password!";
+            echo "Invalid password!";
         }
     } else {
-        $error = "Invalid user_id or password!";
+        echo "No user found with this user_id!";
     }
-
-    $stmt->close();
-    $conn->close();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

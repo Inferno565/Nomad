@@ -58,8 +58,8 @@
                     <img src="../Assets/user.png" alt="">
                 </div>
                 <div class="details">
-                    <h2>John Doe</h2>
-                    <p>Undergraduate, AHTM</p>
+                    <h2><?php echo $student_name; ?></h2>
+                    <p>Undergraduate, <?php echo $student_program; ?></p>
                 </div>
 
             </div>
@@ -70,7 +70,7 @@
                             <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2z" />
                         </svg> Pending Fees: </h5>
 
-                    <h5>100000.00</h5>
+                    <h5><?php echo number_format($student_fees, 2); ?></h5>
                 </div>
                 <div class="stat">
                     <h5> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-graph-up" viewBox="0 0 16 16">
@@ -78,7 +78,7 @@
                         </svg>
                         </svg> Attendance report: </h5>
 
-                    <h5>0%</h5>
+                    <h5><?php echo $student_attendance; ?>%</h5>
                 </div>
                 <div class="stat">
                     <h5> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
