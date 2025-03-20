@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Verify password
         if (password_verify($password, $hashed_password)) {
             $_SESSION['user_id'] = $user_id;
-            header("Location: ../Dashboard"); // Redirect on success
+            header("Location: dashboard.php"); // Redirect on success
             exit();
         } else {
             $error = "Invalid user_id or password!";
